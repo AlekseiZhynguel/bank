@@ -1,13 +1,12 @@
-package org.example.deposits.application;
+package org.example.payments.deposits.application;
 
 import org.example.accounts.domain.services.AccountFinder;
-import org.example.deposits.domain.DepositMother;
-import org.example.deposits.domain.events.FundsDepositedMother;
+import org.example.payments.deposits.domain.DepositMother;
+import org.example.payments.deposits.domain.events.FundsDepositedMother;
 import org.example.domain.EventBus;
 import org.example.payments.deposits.domain.Deposit;
 import org.example.payments.deposits.domain.DepositRepository;
 import org.example.payments.deposits.domain.events.FundsDeposited;
-import org.example.payments.deposits.application.FundsDepositor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

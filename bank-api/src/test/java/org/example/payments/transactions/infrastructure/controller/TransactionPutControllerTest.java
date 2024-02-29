@@ -30,8 +30,8 @@ class TransactionPutControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "origin_account": "origin",
-                                    "destination_account": "destination",
+                                    "originAccount": "origin",
+                                    "destinationAccount": "destination",
                                     "amount": 100,
                                     "description": "description"
                                 }

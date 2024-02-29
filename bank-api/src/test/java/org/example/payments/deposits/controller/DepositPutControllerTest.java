@@ -1,4 +1,4 @@
-package org.example.deposits.infrastructure.controller;
+package org.example.payments.deposits.controller;
 
 import org.example.payments.deposits.application.FundsDepositor;
 import org.example.payments.deposits.infrastructure.controller.DepositPutController;

@@ -9,4 +9,10 @@ public record BalanceAmount(Integer value) {
     public BalanceAmount add(Integer other) {
         return new BalanceAmount(this.value + other);
     }
+
+    public BalanceAmount subtract(Integer other) {
+        int result = this.value - other;
+        if (result < 0) throw new IllegalArgumentException("Insufficient funds!!");
+        return new BalanceAmount(result);
+    }
 }

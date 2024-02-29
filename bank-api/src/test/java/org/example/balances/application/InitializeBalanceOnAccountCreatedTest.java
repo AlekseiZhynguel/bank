@@ -1,4 +1,4 @@
-package org.example.application;
+package org.example.balances.application;
 
 import org.example.accounts.domain.events.AccountCreated;
 import org.example.balances.domain.Balance;

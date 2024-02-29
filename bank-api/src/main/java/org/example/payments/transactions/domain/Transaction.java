@@ -26,7 +26,7 @@ public class Transaction extends AggregateRoot {
     public static Transaction create(String id, String originAccount, String destinationAccount, Integer amount, String description) {
         Transaction transaction = new Transaction(id, originAccount, destinationAccount, amount, description);
 
-        transaction.record(new TransactionSent(id, originAccount, destinationAccount));
+        transaction.record(new TransactionSent(id, originAccount, destinationAccount, amount));
 
         return transaction;
     }

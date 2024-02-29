@@ -1,4 +1,4 @@
-package org.example.deposits.domain.events;
+package org.example.payments.deposits.domain.events;
 
 import org.example.accounts.domain.AccountId;
 import org.example.payments.deposits.domain.Deposit;

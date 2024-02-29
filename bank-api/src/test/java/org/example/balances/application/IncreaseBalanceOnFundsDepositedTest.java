@@ -1,4 +1,4 @@
-package org.example.application;
+package org.example.balances.application;
 
 import org.example.accounts.domain.AccountId;
 import org.example.accounts.domain.exceptions.AccountNotFoundException;
@@ -6,7 +6,6 @@ import org.example.balances.domain.Balance;
 import org.example.balances.domain.BalanceRepository;
 import org.example.balances.domain.primitives.BalancePrimitives;
 import org.example.payments.deposits.domain.events.FundsDeposited;
-import org.example.balances.application.IncreaseBalanceOnFundsDeposited;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

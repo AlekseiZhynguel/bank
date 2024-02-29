@@ -1,4 +1,4 @@
-package org.example.deposits.domain;
+package org.example.payments.deposits.domain;
 
 import org.example.payments.deposits.domain.DepositDescription;
 

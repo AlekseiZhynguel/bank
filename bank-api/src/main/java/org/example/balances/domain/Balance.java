@@ -41,4 +41,8 @@ public class Balance {
     public void increaseIn(Integer other) {
         this.amount = amount.add(other);
     }
+
+    public void decreaseIn(Integer other) {
+        this.amount = amount.subtract(other);
+    }
 }
