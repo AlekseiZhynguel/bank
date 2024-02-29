@@ -1,20 +1,26 @@
 package org.example.deposits.infrastructure.controller;
 
+import org.example.payments.deposits.application.FundsDepositor;
+import org.example.payments.deposits.infrastructure.controller.DepositPutController;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = DepositPutController.class)
 class DepositPutControllerTest {
 
+    @MockBean
+    private FundsDepositor useCase;
     @Autowired
     MockMvc mockMvc;
 
