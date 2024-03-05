@@ -1,4 +1,3 @@
 package org.example.payments.transactions.domain;
 
-public record TransactionAmount(Integer value) {
-}
+public record TransactionAmount(Integer value) {}

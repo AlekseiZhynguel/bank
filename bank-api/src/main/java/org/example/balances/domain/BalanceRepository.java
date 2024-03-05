@@ -5,6 +5,7 @@ import org.example.accounts.domain.AccountId;
 import java.util.Optional;
 
 public interface BalanceRepository {
-    void save(Balance balance);
-    Optional<Balance> findByAccountId(AccountId id);
+  void save(Balance balance);
+
+  Optional<Balance> findByAccountId(AccountId id);
 }

@@ -5,11 +5,11 @@ import org.example.accounts.domain.AccountId;
 
 public class AccountCreatedMother {
 
-    public static AccountCreated create(AccountId id) {
-        return new AccountCreated(id.value());
-    }
+  public static AccountCreated create(AccountId id) {
+    return new AccountCreated(id.value());
+  }
 
-    public static AccountCreated fromAccount(Account account) {
-        return create(account.id());
-    }
+  public static AccountCreated fromAccount(Account account) {
+    return create(account.id());
+  }
 }

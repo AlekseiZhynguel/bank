@@ -8,15 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountFinder {
 
-    private final AccountRepository repository;
+  private final AccountRepository repository;
 
+  public AccountFinder(AccountRepository repository) {
+    this.repository = repository;
+  }
 
-    public AccountFinder(AccountRepository repository) {
-        this.repository = repository;
-    }
-
-    public boolean existsById(AccountId id) {
-        return repository.findById(id)
-                .isPresent();
-    }
+  public boolean existsById(AccountId id) {
+    return repository.findById(id).isPresent();
+  }
 }

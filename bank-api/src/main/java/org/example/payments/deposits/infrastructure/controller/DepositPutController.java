@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class DepositPutController {
 
-    private final FundsDepositor depositor;
+  private final FundsDepositor depositor;
 
-    public DepositPutController(FundsDepositor depositor) {
-        this.depositor = depositor;
-    }
+  public DepositPutController(FundsDepositor depositor) {
+    this.depositor = depositor;
+  }
 
-    @PutMapping(value = "/deposits/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createDeposit(@PathVariable String id, @RequestBody CreateDepositRequest request) {
-        depositor.deposit(id, request.destinationAccount(), request.amount(), request.description());
-    }
+  @PutMapping(value = "/deposits/{id}")
+  @ResponseStatus(HttpStatus.CREATED)
+  public void createDeposit(@PathVariable String id, @RequestBody CreateDepositRequest request) {
+    depositor.deposit(id, request.destinationAccount(), request.amount(), request.description());
+  }
 }

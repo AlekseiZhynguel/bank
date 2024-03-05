@@ -11,10 +11,11 @@ import java.util.Map;
 @Repository
 public class InMemoryTransactionRepository implements TransactionRepository {
 
-    private Map<String, TransactionPrimitives> transactions = new HashMap<>();
-    @Override
-    public void save(Transaction transaction) {
-        TransactionPrimitives primitives = transaction.toPrimitives();
-        transactions.put(primitives.id(), primitives);
-    }
+  private Map<String, TransactionPrimitives> transactions = new HashMap<>();
+
+  @Override
+  public void save(Transaction transaction) {
+    TransactionPrimitives primitives = transaction.toPrimitives();
+    transactions.put(primitives.id(), primitives);
+  }
 }

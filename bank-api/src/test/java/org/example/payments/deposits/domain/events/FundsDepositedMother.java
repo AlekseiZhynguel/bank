@@ -7,11 +7,11 @@ import org.example.payments.deposits.domain.DepositId;
 import org.example.payments.deposits.domain.events.FundsDeposited;
 
 public class FundsDepositedMother {
-    public static FundsDeposited fromDeposit(Deposit deposit) {
-        return create(deposit.id(), deposit.destinationAccount(), deposit.amount());
-    }
+  public static FundsDeposited fromDeposit(Deposit deposit) {
+    return create(deposit.id(), deposit.destinationAccount(), deposit.amount());
+  }
 
-    public static FundsDeposited create(DepositId id, AccountId destinationId, DepositAmount amount) {
-        return new FundsDeposited(id.value(), destinationId.value(), amount.value());
-    }
+  public static FundsDeposited create(DepositId id, AccountId destinationId, DepositAmount amount) {
+    return new FundsDeposited(id.value(), destinationId.value(), amount.value());
+  }
 }

@@ -13,18 +13,19 @@ import java.util.Optional;
 @Repository
 public class InMemoryBalanceRepository implements BalanceRepository {
 
-    private Map<String, BalancePrimitives> balances = new HashMap<>();
-    @Override
-    public void save(Balance balance) {
-        BalancePrimitives primitives = balance.toPrimitives();
-        balances.put(primitives.id(), primitives);
-    }
+  private Map<String, BalancePrimitives> balances = new HashMap<>();
 
-    @Override
-    public Optional<Balance> findByAccountId(AccountId id) {
-        return balances.values().stream()
-                .filter(primitives -> primitives.accountId().equals(id.value()))
-                .findFirst()
-                .map(Balance::from);
-    }
+  @Override
+  public void save(Balance balance) {
+    BalancePrimitives primitives = balance.toPrimitives();
+    balances.put(primitives.id(), primitives);
+  }
+
+  @Override
+  public Optional<Balance> findByAccountId(AccountId id) {
+    return balances.values().stream()
+        .filter(primitives -> primitives.accountId().equals(id.value()))
+        .findFirst()
+        .map(Balance::from);
+  }
 }

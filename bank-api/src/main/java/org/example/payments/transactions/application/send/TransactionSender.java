@@ -7,19 +7,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionSender {
-    private final EventBus eventBus;
-    private final TransactionRepository repository;
+  private final EventBus eventBus;
+  private final TransactionRepository repository;
 
-    public TransactionSender(EventBus eventBus, TransactionRepository repository) {
-        this.eventBus = eventBus;
-        this.repository = repository;
-    }
+  public TransactionSender(EventBus eventBus, TransactionRepository repository) {
+    this.eventBus = eventBus;
+    this.repository = repository;
+  }
 
-    public void send(String id, String originAccount, String destinationAccount, Integer amount, String description) {
+  public void send(
+      String id,
+      String originAccount,
+      String destinationAccount,
+      Integer amount,
+      String description) {
 
-        Transaction transaction = Transaction.create(id, originAccount, destinationAccount, amount, description);
+    Transaction transaction =
+        Transaction.create(id, originAccount, destinationAccount, amount, description);
 
-        repository.save(transaction);
-        eventBus.publish(transaction.pullDomainEvents());
-    }
+    repository.save(transaction);
+    eventBus.publish(transaction.pullDomainEvents());
+  }
 }

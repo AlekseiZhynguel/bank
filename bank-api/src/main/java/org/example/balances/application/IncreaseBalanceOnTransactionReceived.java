@@ -11,20 +11,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class IncreaseBalanceOnTransactionReceived {
 
-    private final BalanceRepository repository;
+  private final BalanceRepository repository;
 
-    public IncreaseBalanceOnTransactionReceived(BalanceRepository repository) {
-        this.repository = repository;
-    }
+  public IncreaseBalanceOnTransactionReceived(BalanceRepository repository) {
+    this.repository = repository;
+  }
 
-    @EventListener
-    public void on(AccountsVerifiedOnTransactionSent event) {
-        AccountId destination = new AccountId(event.destination());
-        Balance balance = repository.findByAccountId(destination)
-                .orElseThrow(() -> new AccountNotFoundException(destination));
+  @EventListener
+  public void on(AccountsVerifiedOnTransactionSent event) {
+    AccountId destination = new AccountId(event.destination());
+    Balance balance =
+        repository
+            .findByAccountId(destination)
+            .orElseThrow(() -> new AccountNotFoundException(destination));
 
-        balance.increaseIn(event.amount());
+    balance.increaseIn(event.amount());
 
-        repository.save(balance);
-    }
+    repository.save(balance);
+  }
 }

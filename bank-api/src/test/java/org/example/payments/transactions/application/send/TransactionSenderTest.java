@@ -16,19 +16,30 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class TransactionSenderTest {
 
-    private final EventBus eventBus = mock(EventBus.class);
-    private final TransactionRepository repository = mock(TransactionRepository.class);
-    private final TransactionSender useCase = new TransactionSender(eventBus, repository);
+  private final EventBus eventBus = mock(EventBus.class);
+  private final TransactionRepository repository = mock(TransactionRepository.class);
+  private final TransactionSender useCase = new TransactionSender(eventBus, repository);
 
-    @Test
-    void shouldSendATransaction() {
-        TransactionPrimitives primitives = new TransactionPrimitives("id", "origin", "destination", 100, "description");
-        Transaction transaction = Transaction.from(primitives);
-        TransactionSent event = new TransactionSent(primitives.id(), primitives.originAccount(), primitives.destinationAccount(), primitives.amount());
+  @Test
+  void shouldSendATransaction() {
+    TransactionPrimitives primitives =
+        new TransactionPrimitives("id", "origin", "destination", 100, "description");
+    Transaction transaction = Transaction.from(primitives);
+    TransactionSent event =
+        new TransactionSent(
+            primitives.id(),
+            primitives.originAccount(),
+            primitives.destinationAccount(),
+            primitives.amount());
 
-        useCase.send(primitives.id(), primitives.originAccount(), primitives.destinationAccount(), primitives.amount(), primitives.description());
+    useCase.send(
+        primitives.id(),
+        primitives.originAccount(),
+        primitives.destinationAccount(),
+        primitives.amount(),
+        primitives.description());
 
-        verify(repository).save(transaction);
-        verify(eventBus).publish(Collections.singletonList(event));
-    }
+    verify(repository).save(transaction);
+    verify(eventBus).publish(Collections.singletonList(event));
+  }
 }

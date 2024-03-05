@@ -15,16 +15,16 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class InitializeBalanceOnAccountCreatedTest {
 
-    private final BalanceRepository repository = mock(BalanceRepository.class);
-    private final InitializeBalanceOnAccountCreated useCase = new InitializeBalanceOnAccountCreated(repository);
+  private final BalanceRepository repository = mock(BalanceRepository.class);
+  private final InitializeBalanceOnAccountCreated useCase =
+      new InitializeBalanceOnAccountCreated(repository);
 
-    @Test
-    void shouldInitializeBalance() {
+  @Test
+  void shouldInitializeBalance() {
 
-        AccountCreated event = new AccountCreated("id");
-        useCase.on(event);
+    AccountCreated event = new AccountCreated("id");
+    useCase.on(event);
 
-        verify(repository).save(isA(Balance.class));
-    }
-
+    verify(repository).save(isA(Balance.class));
+  }
 }

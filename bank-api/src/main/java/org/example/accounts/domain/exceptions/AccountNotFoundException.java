@@ -5,10 +5,9 @@ import org.example.domain.DomainException;
 
 public class AccountNotFoundException extends DomainException {
 
-    private final AccountId id;
+  private final AccountId id;
 
-
-    public AccountNotFoundException(AccountId id) {
-        this.id = id;
-    }
+  public AccountNotFoundException(AccountId id) {
+    this.id = id;
+  }
 }

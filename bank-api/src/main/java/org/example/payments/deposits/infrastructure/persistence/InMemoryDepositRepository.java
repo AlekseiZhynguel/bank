@@ -10,10 +10,11 @@ import java.util.Map;
 
 @Repository
 public class InMemoryDepositRepository implements DepositRepository {
-    private Map<String, DepositPrimitives> deposits = new HashMap<>();
-    @Override
-    public void save(Deposit deposit) {
-        DepositPrimitives primitives = deposit.toPrimitives();
-        deposits.put(primitives.id(), primitives);
-    }
+  private Map<String, DepositPrimitives> deposits = new HashMap<>();
+
+  @Override
+  public void save(Deposit deposit) {
+    DepositPrimitives primitives = deposit.toPrimitives();
+    deposits.put(primitives.id(), primitives);
+  }
 }

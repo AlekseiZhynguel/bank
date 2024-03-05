@@ -1,4 +1,3 @@
 package org.example.domain;
 
-public abstract class Entity {
-}
+public abstract class Entity {}

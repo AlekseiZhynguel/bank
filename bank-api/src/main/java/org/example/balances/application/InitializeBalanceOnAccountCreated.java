@@ -11,18 +11,18 @@ import java.util.UUID;
 @Service
 public class InitializeBalanceOnAccountCreated {
 
-    private final BalanceRepository repository;
+  private final BalanceRepository repository;
 
-    public InitializeBalanceOnAccountCreated(BalanceRepository repository) {
-        this.repository = repository;
-    }
+  public InitializeBalanceOnAccountCreated(BalanceRepository repository) {
+    this.repository = repository;
+  }
 
-    @EventListener
-    public void on(AccountCreated event) {
-        String balanceId = UUID.randomUUID().toString();
-        String accountId = event.aggregateId();
-        Balance balance = Balance.zeroFor(balanceId, accountId);
+  @EventListener
+  public void on(AccountCreated event) {
+    String balanceId = UUID.randomUUID().toString();
+    String accountId = event.aggregateId();
+    Balance balance = Balance.zeroFor(balanceId, accountId);
 
-        repository.save(balance);
-    }
+    repository.save(balance);
+  }
 }

@@ -1,4 +1,3 @@
 package org.example.accounts.domain;
 
-public record AccountEmail(String value) {
-}
+public record AccountEmail(String value) {}

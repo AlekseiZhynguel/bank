@@ -17,34 +17,30 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class IncreaseBalanceOnFundsDepositedTest {
-    BalanceRepository repository = mock(BalanceRepository.class);
-    IncreaseBalanceOnFundsDeposited useCase = new IncreaseBalanceOnFundsDeposited(repository);
+  BalanceRepository repository = mock(BalanceRepository.class);
+  IncreaseBalanceOnFundsDeposited useCase = new IncreaseBalanceOnFundsDeposited(repository);
 
-    @Test
-    void shouldIncreaseBalance() {
-        String aggregrateId = "id";
-        String accountId = "accountId";
-        Integer amount = 100;
-        FundsDeposited event = new FundsDeposited(aggregrateId, accountId, amount);
-        Balance balance = Balance.from(new BalancePrimitives(aggregrateId, accountId, amount));
-        when(repository.findByAccountId(new AccountId(accountId))).thenReturn(Optional.of(balance));
+  @Test
+  void shouldIncreaseBalance() {
+    String aggregrateId = "id";
+    String accountId = "accountId";
+    Integer amount = 100;
+    FundsDeposited event = new FundsDeposited(aggregrateId, accountId, amount);
+    Balance balance = Balance.from(new BalancePrimitives(aggregrateId, accountId, amount));
+    when(repository.findByAccountId(new AccountId(accountId))).thenReturn(Optional.of(balance));
 
+    useCase.on(event);
 
-        useCase.on(event);
+    verify(repository).findByAccountId(new AccountId(accountId));
+    verify(repository).save(balance);
+  }
 
-        verify(repository).findByAccountId(new AccountId(accountId));
-        verify(repository).save(balance);
-    }
-    
-    @Test
-    void shouldThrowAnExceptionWhenAccountNotFound() {
-        String aggregrateId = "id";
-        String accountId = "accountId";
-        Integer amount = 100;
-        FundsDeposited event = new FundsDeposited(aggregrateId, accountId, amount);
-        assertThrows(
-                AccountNotFoundException.class,
-                () -> useCase.on(event)
-        );
-    }
+  @Test
+  void shouldThrowAnExceptionWhenAccountNotFound() {
+    String aggregrateId = "id";
+    String accountId = "accountId";
+    Integer amount = 100;
+    FundsDeposited event = new FundsDeposited(aggregrateId, accountId, amount);
+    assertThrows(AccountNotFoundException.class, () -> useCase.on(event));
+  }
 }

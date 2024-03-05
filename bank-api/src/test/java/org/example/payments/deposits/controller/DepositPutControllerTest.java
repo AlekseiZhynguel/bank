@@ -19,24 +19,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = DepositPutController.class)
 class DepositPutControllerTest {
 
-    @MockBean
-    private FundsDepositor useCase;
-    @Autowired
-    MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
+  @MockBean private FundsDepositor useCase;
 
-    @Test
-    void shouldDepositFunds() throws Exception {
-        mockMvc.perform(
-                put("/deposits/id")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
+  @Test
+  void shouldDepositFunds() throws Exception {
+    mockMvc
+        .perform(
+            put("/deposits/id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    """
                                 {
                                      "destinationAccount": "prueba",
                                      "amount": 23000,
                                      "description": "prueba"
                                  }
                                 """))
-                .andDo(print())
-                .andExpect(status().isCreated());
-    }
+        .andDo(print())
+        .andExpect(status().isCreated());
+  }
 }

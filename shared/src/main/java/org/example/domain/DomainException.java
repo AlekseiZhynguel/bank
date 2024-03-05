@@ -1,4 +1,3 @@
 package org.example.domain;
 
-public class DomainException extends RuntimeException {
-}
+public class DomainException extends RuntimeException {}

@@ -6,43 +6,47 @@ import java.util.Objects;
 
 public class TransactionSent extends DomainEvent {
 
-    private final String originAccountId;
-    private final String destinationAccountId;
-    private final Integer amount;
-    public TransactionSent(String aggregateId, String originAccountId, String destinationAccountId, Integer amount) {
-        super(aggregateId);
-        this.originAccountId = originAccountId;
-        this.destinationAccountId = destinationAccountId;
-        this.amount = amount;
-    }
+  private final String originAccountId;
+  private final String destinationAccountId;
+  private final Integer amount;
 
-    @Override
-    public String eventName() {
-        return null;
-    }
+  public TransactionSent(
+      String aggregateId, String originAccountId, String destinationAccountId, Integer amount) {
+    super(aggregateId);
+    this.originAccountId = originAccountId;
+    this.destinationAccountId = destinationAccountId;
+    this.amount = amount;
+  }
 
-    public String originAccountId() {
-        return originAccountId;
-    }
+  @Override
+  public String eventName() {
+    return null;
+  }
 
-    public String destinationAccountId() {
-        return destinationAccountId;
-    }
+  public String originAccountId() {
+    return originAccountId;
+  }
 
-    public Integer amount() {
-        return amount;
-    }
+  public String destinationAccountId() {
+    return destinationAccountId;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TransactionSent that = (TransactionSent) o;
-        return Objects.equals(originAccountId, that.originAccountId) && Objects.equals(destinationAccountId, that.destinationAccountId) && Objects.equals(amount, that.amount);
-    }
+  public Integer amount() {
+    return amount;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(originAccountId, destinationAccountId, amount);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    TransactionSent that = (TransactionSent) o;
+    return Objects.equals(originAccountId, that.originAccountId)
+        && Objects.equals(destinationAccountId, that.destinationAccountId)
+        && Objects.equals(amount, that.amount);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(originAccountId, destinationAccountId, amount);
+  }
 }
