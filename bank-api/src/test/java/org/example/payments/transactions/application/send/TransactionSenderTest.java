@@ -1,5 +1,9 @@
 package org.example.payments.transactions.application.send;
 
+import static org.mockito.Mockito.*;
+
+import java.util.Collections;
+import java.util.UUID;
 import org.example.domain.EventBus;
 import org.example.payments.transactions.domain.Transaction;
 import org.example.payments.transactions.domain.TransactionRepository;
@@ -8,10 +12,6 @@ import org.example.payments.transactions.domain.primitives.TransactionPrimitives
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Collections;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionSenderTest {
@@ -22,8 +22,10 @@ class TransactionSenderTest {
 
   @Test
   void shouldSendATransaction() {
+    // TODO use object mothers
     TransactionPrimitives primitives =
-        new TransactionPrimitives("id", "origin", "destination", 100, "description");
+        new TransactionPrimitives(
+            "id", UUID.randomUUID().toString(), UUID.randomUUID().toString(), 100, "description");
     Transaction transaction = Transaction.from(primitives);
     TransactionSent event =
         new TransactionSent(

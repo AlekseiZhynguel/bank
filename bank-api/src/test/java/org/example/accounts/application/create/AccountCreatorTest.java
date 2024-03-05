@@ -1,5 +1,6 @@
 package org.example.accounts.application.create;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -9,6 +10,7 @@ import org.example.accounts.domain.AccountMother;
 import org.example.accounts.domain.AccountRepository;
 import org.example.accounts.domain.events.AccountCreated;
 import org.example.accounts.domain.events.AccountCreatedMother;
+import org.example.accounts.domain.exceptions.AccountIdNotUuid;
 import org.example.domain.EventBus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,5 +37,21 @@ class AccountCreatorTest {
 
     verify(repository).save(account);
     verify(eventBus).publish(Collections.singletonList(event));
+  }
+
+  @Test
+  void shouldThrowException() {
+
+    assertThrows(
+        AccountIdNotUuid.class,
+        () -> {
+          Account account = AccountMother.withInvalidId();
+          creator.create(
+              account.id().value(),
+              account.name().value(),
+              account.email().value(),
+              account.phone().value(),
+              account.dni().value());
+        });
   }
 }

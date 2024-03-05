@@ -18,4 +18,13 @@ public class AccountMother {
         AccountPhoneMother.random(),
         AccountDniMother.random());
   }
+
+  public static Account withInvalidId() {
+    return create(
+        AccountIdMother.create("invalid"),
+        AccountNameMother.random(),
+        AccountEmailMother.random(),
+        AccountPhoneMother.random(),
+        AccountDniMother.random());
+  }
 }

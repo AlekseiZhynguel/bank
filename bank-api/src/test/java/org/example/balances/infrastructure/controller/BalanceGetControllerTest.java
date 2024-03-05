@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Optional;
+import org.example.accounts.domain.AccountIdMother;
 import org.example.balances.domain.Balance;
+import org.example.balances.domain.BalanceIdMother;
 import org.example.balances.domain.BalanceRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,13 @@ class BalanceGetControllerTest {
 
   @Test
   void shouldReturnAValidBalance() throws Exception {
-    Balance balance = Balance.zeroFor("id", "accountId");
+    String balanceId = BalanceIdMother.random().value();
+    String accountId = AccountIdMother.random().value();
+    Balance balance = Balance.zeroFor(balanceId, accountId);
     when(repository.findByAccountId(any())).thenReturn(Optional.of(balance));
 
     mockMvc
-        .perform(get("/balances/id"))
+        .perform(get("/balances/" + balanceId))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(
@@ -45,10 +49,11 @@ class BalanceGetControllerTest {
 
   @Test
   void shouldReturnAMessageError() throws Exception {
+    String balanceId = BalanceIdMother.random().value();
     when(repository.findByAccountId(any())).thenReturn(Optional.empty());
 
     mockMvc
-        .perform(get("/balances/id"))
+        .perform(get("/balances/" + balanceId))
         .andDo(print())
         .andExpect(status().isNotFound())
         .andExpect(

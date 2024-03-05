@@ -5,9 +5,7 @@ import org.example.domain.DomainException;
 
 public class AccountNotFoundException extends DomainException {
 
-  private final AccountId id;
-
   public AccountNotFoundException(AccountId id) {
-    this.id = id;
+    super("account_not_found", String.format("The id <%s> was not found", id.value()));
   }
 }

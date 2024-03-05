@@ -2,10 +2,13 @@ package org.example.accounts.application.find;
 
 import static org.mockito.Mockito.*;
 
-import org.example.accounts.domain.AccountId;
+import java.util.Collections;
+import org.example.accounts.domain.events.AccountsVerifiedOnTransactionSent;
+import org.example.accounts.domain.events.AccountsVerifiedOnTransactionSentMother;
 import org.example.accounts.domain.services.AccountFinder;
 import org.example.domain.EventBus;
 import org.example.payments.transactions.domain.events.TransactionSent;
+import org.example.payments.transactions.domain.events.TransactionSentMother;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,19 +23,25 @@ class VerifyAccountsExistOnTransactionSentTest {
 
   @Test
   void shouldVerifyIfBothAccountsExist() {
-    TransactionSent event = new TransactionSent("id", "origin", "destination", 100);
-    when(finder.existsById(new AccountId("origin"))).thenReturn(true);
-    when(finder.existsById(new AccountId("destination"))).thenReturn(true);
+    TransactionSent event = TransactionSentMother.random();
+    AccountsVerifiedOnTransactionSent newEvent =
+        AccountsVerifiedOnTransactionSentMother.fromTransactionSent(event);
+
+    when(finder.existsById(any())).thenReturn(true);
+    when(finder.existsById(any())).thenReturn(true);
+
     useCase.on(event);
 
-    verify(eventBus).publish(any());
+    verify(eventBus).publish(Collections.singletonList(newEvent));
   }
 
   @Test
   void shouldNotPublishAnEventWhenAnAccountDoesNotExist() {
-    TransactionSent event = new TransactionSent("id", "origin", "destination", 100);
-    when(finder.existsById(new AccountId("origin"))).thenReturn(true);
-    when(finder.existsById(new AccountId("destination"))).thenReturn(false);
+    TransactionSent event = TransactionSentMother.random();
+
+    when(finder.existsById(any())).thenReturn(true);
+    when(finder.existsById(any())).thenReturn(false);
+
     useCase.on(event);
 
     verifyNoInteractions(eventBus);
