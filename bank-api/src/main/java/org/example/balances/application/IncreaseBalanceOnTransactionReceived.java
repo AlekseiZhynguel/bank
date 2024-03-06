@@ -23,7 +23,7 @@ public class IncreaseBalanceOnTransactionReceived {
     Balance balance =
         repository
             .findByAccountId(destination)
-            .orElseThrow(() -> new AccountNotFoundException(destination));
+            .orElseThrow(() -> new AccountNotFoundException(destination.value()));
 
     balance.increaseIn(event.amount());
 

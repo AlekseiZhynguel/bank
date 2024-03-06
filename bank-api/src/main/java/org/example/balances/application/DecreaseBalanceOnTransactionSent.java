@@ -21,7 +21,9 @@ public class DecreaseBalanceOnTransactionSent {
   public void on(AccountsVerifiedOnTransactionSent event) {
     AccountId origin = new AccountId(event.origin());
     Balance balance =
-        repository.findByAccountId(origin).orElseThrow(() -> new AccountNotFoundException(origin));
+        repository
+            .findByAccountId(origin)
+            .orElseThrow(() -> new AccountNotFoundException(origin.value()));
 
     balance.decreaseIn(event.amount());
 

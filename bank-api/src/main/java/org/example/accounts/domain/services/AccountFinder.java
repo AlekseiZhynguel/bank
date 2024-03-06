@@ -2,7 +2,6 @@ package org.example.accounts.domain.services;
 
 import org.example.accounts.domain.AccountId;
 import org.example.accounts.domain.AccountRepository;
-import org.example.accounts.domain.exceptions.AccountNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service

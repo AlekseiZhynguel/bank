@@ -1,7 +1,7 @@
-package org.example.accounts.infrastructure.controller;
+package org.example.accounts.infrastructure.controller.put;
 
 import org.example.accounts.application.create.AccountCreator;
-import org.example.accounts.infrastructure.controller.dto.AccountCreateRequest;
+import org.example.accounts.infrastructure.controller.put.dto.AccountCreateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

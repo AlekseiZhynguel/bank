@@ -23,7 +23,7 @@ public class IncreaseBalanceOnFundsDeposited {
     Balance balance =
         repository
             .findByAccountId(accountId)
-            .orElseThrow(() -> new AccountNotFoundException(accountId));
+            .orElseThrow(() -> new AccountNotFoundException(accountId.value()));
 
     balance.increaseIn(event.amount());
     repository.save(balance);
