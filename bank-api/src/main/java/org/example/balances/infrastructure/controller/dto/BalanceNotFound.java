@@ -1,3 +1,3 @@
 package org.example.balances.infrastructure.controller.dto;
 
-public record BalanceNotFound(String message) {}
+public record BalanceNotFound(String message, String id) {}

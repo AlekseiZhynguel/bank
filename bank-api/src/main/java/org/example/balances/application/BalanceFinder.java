@@ -20,6 +20,6 @@ public class BalanceFinder {
     return repository
         .findByAccountId(new AccountId(id))
         .<Either<BalanceNotFound, Balance>>map(Either::right)
-        .orElseGet(() -> Either.left(new BalanceNotFound("Sorry. Couldn't find that balance")));
+        .orElseGet(() -> Either.left(new BalanceNotFound("RESOURCE_NOT_FOUND", id)));
   }
 }

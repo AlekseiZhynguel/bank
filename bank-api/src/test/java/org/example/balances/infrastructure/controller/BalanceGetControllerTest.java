@@ -42,8 +42,13 @@ class BalanceGetControllerTest {
                 .json(
                     """
                         {
-                            "amount": 0
-                        }
+                             "status": "success",
+                             "statusCode": 200,
+                             "payload": {
+                                 "amount": 0
+                             },
+                             "documentation_url": "https://api.example.com/docs"
+                         }
                         """));
   }
 
@@ -61,8 +66,18 @@ class BalanceGetControllerTest {
                 .json(
                     """
                         {
-                            "message": "Sorry. Couldn't find that balance"
-                        }
-                        """));
+                             "status": "error",
+                             "statusCode": 404,
+                             "error": {
+                                 "code": "RESOURCE_NOT_FOUND",
+                                 "message": "The requested resource was not found.",
+                                 "details": "The user with the ID '%s' does not exist in our records.",
+                                 "path": "/balances/%s",
+                                 "suggestion": "Please check if the user ID is correct or refer to our documentation at https://api.example.com/docs/errors#RESOURCE_NOT_FOUND for more information."
+                             },
+                             "documentation_url": "https://api.example.com/docs/errors"
+                         }
+                        """
+                        .formatted(balanceId, balanceId)));
   }
 }
