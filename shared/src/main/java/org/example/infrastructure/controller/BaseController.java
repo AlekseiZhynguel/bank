@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class BaseController {
 
-  protected <T> ResponseEntity<String> buildSuccessResponseJsonResponse(T reponseObject) {
+  protected <T> ResponseEntity<String> buildSuccessJsonResponse(T reponseObject) {
     SuccessResponse<T> successResponse =
         new SuccessResponse<>(
             HttpStatus.OK.value(),

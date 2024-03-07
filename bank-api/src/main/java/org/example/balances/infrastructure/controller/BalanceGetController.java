@@ -31,7 +31,7 @@ public class BalanceGetController extends BaseController {
             error -> buildErrorJsonResponse(error.message(), error.id()),
             balance -> {
               BalanceResponse response = new BalanceResponse(balance.amount().value());
-              return buildSuccessResponseJsonResponse(response);
+              return buildSuccessJsonResponse(response);
             });
   }
 
