@@ -16,6 +16,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.build-image.imageName>aleksei/${project.parent.artifactId}-${project.parent.artifactId}
+        </spring-boot.build-image.imageName>
     </properties>
 
     <dependencies>

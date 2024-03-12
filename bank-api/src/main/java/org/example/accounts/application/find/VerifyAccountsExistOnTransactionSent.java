@@ -1,5 +1,6 @@
 package org.example.accounts.application.find;
 
+import java.util.Collections;
 import org.example.accounts.domain.AccountId;
 import org.example.accounts.domain.events.AccountsVerifiedOnTransactionSent;
 import org.example.accounts.domain.services.AccountFinder;
@@ -7,8 +8,6 @@ import org.example.domain.EventBus;
 import org.example.payments.transactions.domain.events.TransactionSent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class VerifyAccountsExistOnTransactionSent {

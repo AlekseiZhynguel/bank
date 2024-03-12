@@ -1,10 +1,9 @@
 package org.example.accounts.domain;
 
+import java.util.Objects;
 import org.example.accounts.domain.events.AccountCreated;
 import org.example.accounts.domain.primitives.AccountPrimitives;
 import org.example.domain.AggregateRoot;
-
-import java.util.Objects;
 
 public class Account extends AggregateRoot {
 
