@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: bank
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: bank
@@ -22,7 +22,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bank-svc
+  name: bank-service
 spec:
   selector:
     app: bank
