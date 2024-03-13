@@ -1,13 +1,14 @@
 package org.example.infrastructure.events.spring;
 
+import java.util.List;
 import org.example.domain.DomainEvent;
 import org.example.domain.EventBus;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
+@Primary
 public class EventBusSpring implements EventBus {
   private final ApplicationEventPublisher publisher;
 

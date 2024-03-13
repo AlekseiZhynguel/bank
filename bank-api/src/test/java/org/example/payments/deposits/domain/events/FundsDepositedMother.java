@@ -16,4 +16,8 @@ public class FundsDepositedMother {
   public static FundsDeposited random() {
     return create(DepositIdMother.random(), AccountIdMother.random(), DepositAmountMother.random());
   }
+
+  public static FundsDeposited withAccountIdAndAmount(AccountId accountId, DepositAmount amount) {
+    return create(DepositIdMother.random(), accountId, amount);
+  }
 }

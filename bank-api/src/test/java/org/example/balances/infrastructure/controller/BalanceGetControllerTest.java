@@ -4,11 +4,7 @@ import org.example.AcceptanceTestCase;
 import org.example.accounts.domain.AccountIdMother;
 import org.example.balances.domain.BalanceIdMother;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BalanceGetControllerTest extends AcceptanceTestCase {
 
   @Test
