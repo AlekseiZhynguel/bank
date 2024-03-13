@@ -1,42 +1,43 @@
 package org.example.payments.deposits.controller;
 
-import org.example.payments.deposits.application.FundsDepositor;
-import org.example.payments.deposits.infrastructure.controller.DepositPutController;
+import org.example.AcceptanceTestCase;
+import org.example.accounts.domain.AccountIdMother;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = DepositPutController.class)
-class DepositPutControllerTest {
-
-  @Autowired MockMvc mockMvc;
-  @MockBean private FundsDepositor useCase;
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class DepositPutControllerTest extends AcceptanceTestCase {
 
   @Test
   void shouldDepositFunds() throws Exception {
-    mockMvc
-        .perform(
-            put("/deposits/id")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    """
-                                {
-                                     "destinationAccount": "prueba",
-                                     "amount": 23000,
-                                     "description": "prueba"
-                                 }
-                                """))
-        .andDo(print())
-        .andExpect(status().isCreated());
+
+    String accountId = AccountIdMother.random().value();
+    givenThereIsAnAccount(accountId);
+    String body =
+        """
+          {
+               "destinationAccount": "%s",
+               "amount": 23000,
+               "description": "prueba"
+           }
+          """
+            .formatted(accountId);
+
+    assertRequestWithBody("PUT", "/deposits/id", body, 201);
+  }
+
+  private void givenThereIsAnAccount(String accountId) throws Exception {
+    String body =
+        """
+          {
+              "name": "name",
+              "email": "email",
+              "phone": "phone",
+              "dni": "dni"
+          }
+          """;
+    assertRequestWithBody("PUT", "/accounts/" + accountId, body, 201);
   }
 }

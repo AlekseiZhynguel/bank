@@ -1,42 +1,58 @@
 package org.example.payments.transactions.infrastructure.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.example.payments.transactions.application.send.TransactionSender;
+import org.example.AcceptanceTestCase;
+import org.example.accounts.domain.AccountIdMother;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = TransactionPutController.class)
-class TransactionPutControllerTest {
-
-  @Autowired MockMvc mockMvc;
-  @MockBean private TransactionSender useCase;
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class TransactionPutControllerTest extends AcceptanceTestCase {
 
   @Test
   void shouldCreateATransaction() throws Exception {
-    mockMvc
-        .perform(
-            put("/transactions/id")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    """
-                                {
-                                    "originAccount": "origin",
-                                    "destinationAccount": "destination",
-                                    "amount": 100,
-                                    "description": "description"
-                                }
-                                """))
-        .andDo(print())
-        .andExpect(status().isCreated());
+
+    String originAccount = AccountIdMother.random().value();
+    String destinationAccount = AccountIdMother.random().value();
+    givenThereAreTwoAccountsAndOneWithSomeMoney(originAccount, destinationAccount);
+    String body =
+        """
+          {
+              "originAccount": "%s",
+              "destinationAccount": "%s",
+              "amount": 100,
+              "description": "description"
+          }
+          """
+            .formatted(originAccount, destinationAccount);
+
+    assertRequestWithBody("PUT", "/transactions/id", body, 201);
+  }
+
+  private void givenThereAreTwoAccountsAndOneWithSomeMoney(
+      String originAccount, String destinationAccount) throws Exception {
+    String accountBody =
+        """
+              {
+                  "name": "name",
+                  "email": "email",
+                  "phone": "phone",
+                  "dni": "dni"
+              }
+              """;
+    String depositBody =
+        """
+          {
+               "destinationAccount": "%s",
+               "amount": 23000,
+               "description": "prueba"
+           }
+          """
+            .formatted(originAccount);
+
+    assertRequestWithBody("PUT", "/accounts/" + originAccount, accountBody, 201);
+    assertRequestWithBody("PUT", "/accounts/" + destinationAccount, accountBody, 201);
+    assertRequestWithBody("PUT", "/deposits/id", depositBody, 201);
   }
 }
