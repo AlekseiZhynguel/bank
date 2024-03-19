@@ -3,7 +3,7 @@ package org.example.payments.transactions.domain;
 import java.util.Objects;
 import org.example.accounts.domain.AccountId;
 import org.example.domain.AggregateRoot;
-import org.example.payments.transactions.domain.events.TransactionSent;
+import org.example.payments.transactions.domain.events.TransactionCreated;
 import org.example.payments.transactions.domain.primitives.TransactionPrimitives;
 
 public class Transaction extends AggregateRoot {
@@ -36,7 +36,7 @@ public class Transaction extends AggregateRoot {
     Transaction transaction =
         new Transaction(id, originAccount, destinationAccount, amount, description);
 
-    transaction.record(new TransactionSent(id, originAccount, destinationAccount, amount));
+    transaction.record(new TransactionCreated(id, originAccount, destinationAccount, amount));
 
     return transaction;
   }

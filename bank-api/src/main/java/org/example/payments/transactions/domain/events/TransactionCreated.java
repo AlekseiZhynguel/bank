@@ -1,16 +1,15 @@
 package org.example.payments.transactions.domain.events;
 
+import java.util.Objects;
 import org.example.domain.DomainEvent;
 
-import java.util.Objects;
-
-public class TransactionSent extends DomainEvent {
+public class TransactionCreated extends DomainEvent {
 
   private final String originAccountId;
   private final String destinationAccountId;
   private final Integer amount;
 
-  public TransactionSent(
+  public TransactionCreated(
       String aggregateId, String originAccountId, String destinationAccountId, Integer amount) {
     super(aggregateId);
     this.originAccountId = originAccountId;
@@ -39,7 +38,7 @@ public class TransactionSent extends DomainEvent {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    TransactionSent that = (TransactionSent) o;
+    TransactionCreated that = (TransactionCreated) o;
     return Objects.equals(originAccountId, that.originAccountId)
         && Objects.equals(destinationAccountId, that.destinationAccountId)
         && Objects.equals(amount, that.amount);

@@ -7,14 +7,14 @@ import org.example.payments.transactions.domain.TransactionAmountMother;
 import org.example.payments.transactions.domain.TransactionId;
 import org.example.payments.transactions.domain.TransactionIdMother;
 
-public class TransactionSentMother {
+public class TransactionCreatedMother {
 
-  public static TransactionSent create(
+  public static TransactionCreated create(
       TransactionId id, AccountId origin, AccountId destination, TransactionAmount amount) {
-    return new TransactionSent(id.value(), origin.value(), destination.value(), amount.value());
+    return new TransactionCreated(id.value(), origin.value(), destination.value(), amount.value());
   }
 
-  public static TransactionSent random() {
+  public static TransactionCreated random() {
     return create(
         TransactionIdMother.random(),
         AccountIdMother.random(),
