@@ -59,22 +59,6 @@ public class Transaction extends AggregateRoot {
     return id;
   }
 
-  public AccountId originId() {
-    return originId;
-  }
-
-  public AccountId destinationId() {
-    return destinationId;
-  }
-
-  public TransactionAmount amount() {
-    return amount;
-  }
-
-  public TransactionDescription description() {
-    return description;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

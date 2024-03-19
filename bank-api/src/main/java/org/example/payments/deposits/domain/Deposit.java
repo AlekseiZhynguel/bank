@@ -50,10 +50,6 @@ public class Deposit extends AggregateRoot {
     return amount;
   }
 
-  public DepositDescription description() {
-    return description;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -17,6 +17,6 @@ public class DepositPutController {
   @PutMapping(value = "/deposits/{id}")
   @ResponseStatus(HttpStatus.CREATED)
   public void createDeposit(@PathVariable String id, @RequestBody CreateDepositRequest request) {
-    depositor.deposit(id, request.destinationAccount(), request.amount(), request.description());
+    depositor.deposit(id, request);
   }
 }

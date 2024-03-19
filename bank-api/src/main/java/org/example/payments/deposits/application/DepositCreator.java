@@ -5,6 +5,7 @@ import org.example.accounts.domain.services.AccountFinder;
 import org.example.domain.EventBus;
 import org.example.payments.deposits.domain.Deposit;
 import org.example.payments.deposits.domain.DepositRepository;
+import org.example.payments.deposits.infrastructure.controller.dto.CreateDepositRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,16 +22,18 @@ public class DepositCreator {
     this.eventBus = eventBus;
   }
 
-  public void deposit(String id, String destinationAccount, Integer amount, String description) {
-    Deposit deposit = Deposit.create(id, destinationAccount, amount, description);
+  public void deposit(String id, CreateDepositRequest request) {
 
-    if (existsAccountWith(deposit.destinationAccount())) {
+    if (existsAccountWith(request.destinationAccount())) {
+      Deposit deposit =
+          Deposit.create(id, request.destinationAccount(), request.amount(), request.description());
+
       repository.save(deposit);
       eventBus.publish(deposit.pullDomainEvents());
     }
   }
 
-  private boolean existsAccountWith(AccountId id) {
-    return accountFinder.existsById(id);
+  private boolean existsAccountWith(String id) {
+    return accountFinder.existsById(new AccountId(id));
   }
 }

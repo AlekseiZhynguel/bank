@@ -1,43 +1,40 @@
 package org.example.payments.deposits.application;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-import java.util.Collections;
+import org.example.accounts.domain.AccountId;
 import org.example.accounts.domain.services.AccountFinder;
-import org.example.domain.EventBus;
-import org.example.payments.deposits.domain.Deposit;
+import org.example.infrastructure.events.noop.EventBusNoop;
+import org.example.payments.deposits.controller.dto.CreateDepositRequestMother;
+import org.example.payments.deposits.domain.DepositIdMother;
 import org.example.payments.deposits.domain.DepositMother;
-import org.example.payments.deposits.domain.DepositRepository;
-import org.example.payments.deposits.domain.events.DepositCreated;
-import org.example.payments.deposits.domain.events.DepositCreatedMother;
+import org.example.payments.deposits.infrastructure.persistence.InMemoryDepositRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 class DepositCreatorTest {
 
-  private final AccountFinder finder = mock(AccountFinder.class);
-  private final DepositRepository repository = mock(DepositRepository.class);
-  private final EventBus eventBus = mock(EventBus.class);
-  private final DepositCreator useCase = new DepositCreator(finder, repository, eventBus);
-
   @Test
-  void shouldDepositFunds() {
+  void shouldCreateDeposit() {
 
-    Deposit deposit = DepositMother.random();
-    DepositCreated event = DepositCreatedMother.fromDeposit(deposit);
+    var finder = mock(AccountFinder.class);
+    var repository = new InMemoryDepositRepository();
+    var eventBus = new EventBusNoop();
+    var useCase = new DepositCreator(finder, repository, eventBus);
 
-    when(finder.existsById(any())).thenReturn(true);
+    var id = DepositIdMother.random();
+    var request = CreateDepositRequestMother.random();
+    var deposit = DepositMother.fromRequest(id, request);
 
-    useCase.deposit(
-        deposit.id().value(),
-        deposit.destinationAccount().value(),
-        deposit.amount().value(),
-        deposit.description().value());
+    when(finder.existsById(new AccountId(request.destinationAccount()))).thenReturn(true);
 
-    verify(repository).save(deposit);
-    verify(eventBus).publish(Collections.singletonList(event));
+    useCase.deposit(deposit.id().value(), request);
+
+    var expected = repository.findById(id).get();
+
+    assertEquals(expected, deposit);
   }
 }
