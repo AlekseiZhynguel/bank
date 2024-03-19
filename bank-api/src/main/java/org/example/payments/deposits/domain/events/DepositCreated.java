@@ -1,15 +1,14 @@
 package org.example.payments.deposits.domain.events;
 
+import java.util.Objects;
 import org.example.domain.DomainEvent;
 
-import java.util.Objects;
-
-public class FundsDeposited extends DomainEvent {
+public class DepositCreated extends DomainEvent {
 
   private final String accountId;
   private final Integer amount;
 
-  public FundsDeposited(String aggregateId, String accountId, Integer amount) {
+  public DepositCreated(String aggregateId, String accountId, Integer amount) {
     super(aggregateId);
     this.accountId = accountId;
     this.amount = amount;
@@ -17,7 +16,7 @@ public class FundsDeposited extends DomainEvent {
 
   @Override
   public String eventName() {
-    return "payment.funds.deposited";
+    return "payment.deposit.created";
   }
 
   public String accountId() {
@@ -32,7 +31,7 @@ public class FundsDeposited extends DomainEvent {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    FundsDeposited that = (FundsDeposited) o;
+    DepositCreated that = (DepositCreated) o;
     return Objects.equals(accountId, that.accountId) && Objects.equals(amount, that.amount);
   }
 

@@ -4,21 +4,21 @@ import org.example.accounts.domain.AccountId;
 import org.example.accounts.domain.exceptions.AccountNotFoundException;
 import org.example.balances.domain.Balance;
 import org.example.balances.domain.BalanceRepository;
-import org.example.payments.deposits.domain.events.FundsDeposited;
+import org.example.payments.deposits.domain.events.DepositCreated;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IncreaseBalanceOnFundsDeposited {
+public class IncreaseBalanceOnDepositCreated {
 
   private final BalanceRepository repository;
 
-  public IncreaseBalanceOnFundsDeposited(BalanceRepository repository) {
+  public IncreaseBalanceOnDepositCreated(BalanceRepository repository) {
     this.repository = repository;
   }
 
   @EventListener
-  public void on(FundsDeposited event) {
+  public void on(DepositCreated event) {
     AccountId accountId = new AccountId(event.accountId());
     Balance balance =
         repository

@@ -1,6 +1,6 @@
 package org.example.payments.deposits.infrastructure.controller;
 
-import org.example.payments.deposits.application.FundsDepositor;
+import org.example.payments.deposits.application.DepositCreator;
 import org.example.payments.deposits.infrastructure.controller.dto.CreateDepositRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class DepositPutController {
 
-  private final FundsDepositor depositor;
+  private final DepositCreator depositor;
 
-  public DepositPutController(FundsDepositor depositor) {
+  public DepositPutController(DepositCreator depositor) {
     this.depositor = depositor;
   }
 

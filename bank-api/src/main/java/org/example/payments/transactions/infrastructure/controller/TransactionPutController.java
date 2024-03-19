@@ -18,11 +18,6 @@ public class TransactionPutController {
   @PutMapping("/transactions/{id}")
   public void sendTransaction(
       @PathVariable String id, @RequestBody CreateTransactionRequest request) {
-    sender.send(
-        id,
-        request.originAccount(),
-        request.destinationAccount(),
-        request.amount(),
-        request.description());
+    sender.send(id, request);
   }
 }

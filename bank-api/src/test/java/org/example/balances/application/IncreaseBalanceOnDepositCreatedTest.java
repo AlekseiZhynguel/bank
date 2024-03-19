@@ -8,10 +8,10 @@ import org.example.accounts.domain.exceptions.AccountNotFoundException;
 import org.example.balances.domain.BalanceAmount;
 import org.example.balances.infrastructure.persistence.InMemoryBalanceRepository;
 import org.example.payments.deposits.domain.DepositAmount;
-import org.example.payments.deposits.domain.events.FundsDepositedMother;
+import org.example.payments.deposits.domain.events.DepositCreatedMother;
 import org.junit.jupiter.api.Test;
 
-class IncreaseBalanceOnFundsDepositedTest {
+class IncreaseBalanceOnDepositCreatedTest {
 
   private final AccountId accountId =
       new AccountId(InMemoryBalanceRepository.testBalances.accountId());
@@ -21,8 +21,8 @@ class IncreaseBalanceOnFundsDepositedTest {
   @Test
   void shouldIncreaseBalance() {
     var repository = InMemoryBalanceRepository.withSomeBalances();
-    var useCase = new IncreaseBalanceOnFundsDeposited(repository);
-    var event = FundsDepositedMother.withAccountIdAndAmount(accountId, new DepositAmount(100));
+    var useCase = new IncreaseBalanceOnDepositCreated(repository);
+    var event = DepositCreatedMother.withAccountIdAndAmount(accountId, new DepositAmount(100));
 
     useCase.on(event);
 
@@ -33,8 +33,8 @@ class IncreaseBalanceOnFundsDepositedTest {
   @Test
   void shouldThrowAnExceptionWhenAccountNotFound() {
     var repository = new InMemoryBalanceRepository();
-    var useCase = new IncreaseBalanceOnFundsDeposited(repository);
-    var event = FundsDepositedMother.random();
+    var useCase = new IncreaseBalanceOnDepositCreated(repository);
+    var event = DepositCreatedMother.random();
 
     assertThrows(AccountNotFoundException.class, () -> useCase.on(event));
   }

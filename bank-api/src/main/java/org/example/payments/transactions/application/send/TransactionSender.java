@@ -3,6 +3,7 @@ package org.example.payments.transactions.application.send;
 import org.example.domain.EventBus;
 import org.example.payments.transactions.domain.Transaction;
 import org.example.payments.transactions.domain.TransactionRepository;
+import org.example.payments.transactions.infrastructure.controller.dto.CreateTransactionRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,15 +16,15 @@ public class TransactionSender {
     this.repository = repository;
   }
 
-  public void send(
-      String id,
-      String originAccount,
-      String destinationAccount,
-      Integer amount,
-      String description) {
+  public void send(String id, CreateTransactionRequest request) {
 
     Transaction transaction =
-        Transaction.create(id, originAccount, destinationAccount, amount, description);
+        Transaction.create(
+            id,
+            request.originAccount(),
+            request.destinationAccount(),
+            request.amount(),
+            request.description());
 
     repository.save(transaction);
     eventBus.publish(transaction.pullDomainEvents());

@@ -3,7 +3,7 @@ package org.example.payments.deposits.domain;
 import java.util.Objects;
 import org.example.accounts.domain.AccountId;
 import org.example.domain.AggregateRoot;
-import org.example.payments.deposits.domain.events.FundsDeposited;
+import org.example.payments.deposits.domain.events.DepositCreated;
 import org.example.payments.deposits.domain.primitives.DepositPrimitives;
 
 public class Deposit extends AggregateRoot {
@@ -23,7 +23,7 @@ public class Deposit extends AggregateRoot {
       String id, String destinationAccount, Integer amount, String description) {
     Deposit deposit = new Deposit(id, destinationAccount, amount, description);
 
-    deposit.record(new FundsDeposited(id, destinationAccount, amount));
+    deposit.record(new DepositCreated(id, destinationAccount, amount));
 
     return deposit;
   }

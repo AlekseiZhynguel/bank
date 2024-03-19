@@ -8,13 +8,13 @@ import org.example.payments.deposits.domain.DepositRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FundsDepositor {
+public class DepositCreator {
 
   private final AccountFinder accountFinder;
   private final DepositRepository repository;
   private final EventBus eventBus;
 
-  public FundsDepositor(
+  public DepositCreator(
       AccountFinder accountFinder, DepositRepository repository, EventBus eventBus) {
     this.accountFinder = accountFinder;
     this.repository = repository;
