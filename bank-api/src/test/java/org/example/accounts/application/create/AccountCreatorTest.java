@@ -1,42 +1,32 @@
 package org.example.accounts.application.create;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
-import java.util.Collections;
-import org.example.accounts.domain.Account;
+import org.example.accounts.domain.AccountIdMother;
 import org.example.accounts.domain.AccountMother;
-import org.example.accounts.domain.AccountRepository;
-import org.example.accounts.domain.events.AccountCreated;
-import org.example.accounts.domain.events.AccountCreatedMother;
 import org.example.accounts.domain.exceptions.AccountIdNotUuid;
-import org.example.domain.EventBus;
+import org.example.accounts.infrastructure.controller.dto.AccountCreateRequestMother;
+import org.example.accounts.infrastructure.persistence.InMemoryAccountRepository;
+import org.example.infrastructure.events.noop.EventBusNoop;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class AccountCreatorTest {
-  private final AccountRepository repository = mock(AccountRepository.class);
-  private final EventBus eventBus = mock(EventBus.class);
-  private final AccountCreator creator = new AccountCreator(repository, eventBus);
 
   @Test
   void shouldCreateAnAccount() {
 
-    Account account = AccountMother.random();
-    AccountCreated event = AccountCreatedMother.fromAccount(account);
+    var repository = new InMemoryAccountRepository();
+    var eventBus = new EventBusNoop();
+    var useCase = new AccountCreator(repository, eventBus);
+    var id = AccountIdMother.random();
+    var request = AccountCreateRequestMother.random();
+    var account = AccountMother.fromRequest(id, request);
 
-    creator.create(
-        account.id().value(),
-        account.name().value(),
-        account.email().value(),
-        account.phone().value(),
-        account.dni().value());
+    useCase.create(id.value(), request);
 
-    verify(repository).save(account);
-    verify(eventBus).publish(Collections.singletonList(event));
+    var expected = repository.findById(id).get();
+    assertEquals(expected, account);
   }
 
   @Test
@@ -45,13 +35,13 @@ class AccountCreatorTest {
     assertThrows(
         AccountIdNotUuid.class,
         () -> {
-          Account account = AccountMother.withInvalidId();
-          creator.create(
-              account.id().value(),
-              account.name().value(),
-              account.email().value(),
-              account.phone().value(),
-              account.dni().value());
+          var repository = new InMemoryAccountRepository();
+          var eventBus = new EventBusNoop();
+          var useCase = new AccountCreator(repository, eventBus);
+          var id = AccountIdMother.withInvalidId();
+          var request = AccountCreateRequestMother.random();
+
+          useCase.create(id.value(), request);
         });
   }
 }

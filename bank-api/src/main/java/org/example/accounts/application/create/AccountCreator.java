@@ -2,6 +2,7 @@ package org.example.accounts.application.create;
 
 import org.example.accounts.domain.Account;
 import org.example.accounts.domain.AccountRepository;
+import org.example.accounts.infrastructure.controller.put.dto.AccountCreateRequest;
 import org.example.domain.EventBus;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,9 @@ public class AccountCreator {
     this.eventBus = eventBus;
   }
 
-  public void create(String id, String name, String email, String phone, String dni) {
-    Account account = Account.create(id, name, email, phone, dni);
+  public void create(String id, AccountCreateRequest request) {
+    Account account =
+        Account.create(id, request.name(), request.email(), request.phone(), request.dni());
 
     repository.save(account);
     eventBus.publish(account.pullDomainEvents());

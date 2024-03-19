@@ -11,4 +11,8 @@ public class AccountIdMother {
   public static AccountId random() {
     return create(UUID.randomUUID().toString());
   }
+
+  public static AccountId withInvalidId() {
+    return create("invalid");
+  }
 }

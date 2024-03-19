@@ -17,6 +17,6 @@ public class AccountPutController {
   @ResponseStatus(HttpStatus.CREATED)
   @PutMapping(value = "/accounts/{id}")
   public void create(@PathVariable String id, @RequestBody AccountCreateRequest request) {
-    creator.create(id, request.name(), request.email(), request.phone(), request.dni());
+    creator.create(id, request);
   }
 }

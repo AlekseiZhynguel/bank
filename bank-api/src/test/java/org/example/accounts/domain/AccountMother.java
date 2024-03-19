@@ -1,6 +1,7 @@
 package org.example.accounts.domain;
 
 import org.example.accounts.domain.primitives.AccountPrimitives;
+import org.example.accounts.infrastructure.controller.put.dto.AccountCreateRequest;
 
 public class AccountMother {
 
@@ -26,5 +27,11 @@ public class AccountMother {
         AccountEmailMother.random(),
         AccountPhoneMother.random(),
         AccountDniMother.random());
+  }
+
+  public static Account fromRequest(AccountId id, AccountCreateRequest request) {
+    return Account.from(
+        new AccountPrimitives(
+            id.value(), request.name(), request.email(), request.phone(), request.dni()));
   }
 }
